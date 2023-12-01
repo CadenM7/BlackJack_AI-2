@@ -1,9 +1,11 @@
 package Blackjack.GUI;
 
 import Blackjack.Game.Blackjack;
+import Blackjack.Game.BlackjackAI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -31,8 +33,17 @@ public class BlackjackController {
 
     @FXML
     private Button stand;
+    @FXML
+    private Button play;
+    @FXML
+    private TextField numOfGames;
+
+    @FXML
+    private Button train;
 
     private Blackjack blackjack;
+
+    private BlackjackAI blackjackAi;
 
     @FXML
     public void initialize() {
@@ -146,6 +157,75 @@ public class BlackjackController {
             }
             updateView();
         }
+    @FXML
+    private void aiTrain() {
+        boolean gameOver = false;
+        while(!gameOver) {
+            int action = blackjackAi.senseActLearn(blackjack.getPlayer2HandValue() - 4 + 17 * (blackjack.getPlayerHandValue() - 4), 0);
+            if(action == 0) {
+                blackjack.playerHit();
+                updateView();
+                getPlayerHandValue();
+                System.out.println("Player " + blackjack.getPlayerHandValue());
+                if(blackjack.getPlayerHandValue() > 21) {
+                    disableButton(true);
+                    label.setText("LOSE, Play Again?");
+                    gameOver = true;
+                }
+                if(blackjack.getPlayerHandValue() == 21) {
+                    disableButton(true);
+                    label.setText("WON, Play Again?");
+                    gameOver = true;
+                }
+            }
+            if(action == 1) {
+                blackjack.playerStand();
+                disableButton(true);
+                updateView();
+                gameOver = true;
+            }
+        }
+        while (blackjack.getPlayer2HandValue() < 17) {
+            if (blackjack.getPlayer2HandValue() == 17) {
+                blackjack.dealerStand();
+            } else {
+                blackjack.dealerHit();
+            }
+            updateView();
+        }
+        System.out.println("Dealer " + blackjack.getPlayer2HandValue());
+        if (blackjack.getPlayer2HandValue() > 21) {
+            label.setText("WON, Play Again?");
+        }
+        if (blackjack.getPlayer2HandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
+            label.setText("WON, Play Again?");
+        }
+        if (blackjack.getPlayer2HandValue() == 21) {
+            label.setText("LOSE, Play Again?");
+        }
+        if (blackjack.getPlayer2HandValue() > blackjack.getPlayerHandValue() && blackjack.getPlayer2HandValue() < 21) {
+            label.setText("LOSE, Play Again?");
+        }
+        if (blackjack.getPlayer2HandValue() == blackjack.getPlayerHandValue()) {
+            label.setText("DRAW, Play Again?");
+        }
+        updateView();
+    }
+    @FXML
+    public void aiPlay() {
+        int points = 0;
+        int games = Integer.parseInt(numOfGames.getText());
+        for(int i = 0; i < games; i++){
+            if(blackjack.getPlayerHandValue() == 21 || blackjack.getPlayer2HandValue() > 21) {
+                points += 1;
+                reset();
+            }
+            if(blackjack.getPlayer2HandValue() == 21 || blackjack.getPlayerHandValue() > 21) {
+                points -= 3;
+                reset();
+            }
+        }
+    }
     @FXML
     public void getPlayerHandValue() {
         playerScore.setText(String.valueOf(blackjack.getPlayerHandValue()));
