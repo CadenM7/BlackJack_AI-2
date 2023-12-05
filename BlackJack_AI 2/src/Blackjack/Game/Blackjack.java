@@ -62,6 +62,8 @@ public class Blackjack {
         return player2.tv();
     }
 
+    public int getPlayer2FirstCard(){return player2.fv();}
+
     public int handSize() {
         return player.getLength();
     }

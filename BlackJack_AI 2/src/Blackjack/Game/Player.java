@@ -29,6 +29,10 @@ public class Player {
         return v;
     }
 
+    public int fv() {
+        return hand.get(0).getCardTV();
+    }
+
     public int getLength() {
         return hand.size();
     }
