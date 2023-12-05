@@ -54,7 +54,7 @@ public class BlackjackController {
     @FXML
     public void initialize() {
         blackjack = new Blackjack(52);
-        blackjackAi = new BlackjackAI(170, 2, 0, 50, 100, .5);
+        blackjackAi = new BlackjackAI(171, 2, 0, 10, 50, .5);
         updateView();
         System.out.println("Player " + blackjack.getPlayerHandValue());
         System.out.println("Dealer " + blackjack.getPlayer2HandValue());
@@ -101,19 +101,19 @@ public class BlackjackController {
         System.out.println("Dealer " + blackjack.getPlayer2HandValue());
         if (blackjack.getPlayer2HandValue() > 21) {
             label.setText("WON, Play Again?");
-            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), 4);
+            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), 10);
         }
         if (blackjack.getPlayer2HandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
             label.setText("WON, Play Again?");
-            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), 4);
+            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), 10);
         }
         if (blackjack.getPlayer2HandValue() == 21) {
             label.setText("LOSE, Play Again?");
-            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), -5);
+            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), -20);
         }
         if (blackjack.getPlayer2HandValue() > blackjack.getPlayerHandValue() && blackjack.getPlayer2HandValue() < 21) {
             label.setText("LOSE, Play Again?");
-            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), -5);
+            blackjackAi.senseActLearn(17 * (blackjack.getPlayer2FirstCard() - 2) + (blackjack.getPlayerHandValue() - 4), -20);
         }
         if (blackjack.getPlayer2HandValue() == blackjack.getPlayerHandValue()) {
             label.setText("DRAW, Play Again?");
@@ -177,22 +177,22 @@ public class BlackjackController {
             }
             System.out.println("Dealer " + blackjack.getPlayer2HandValue());
             if (blackjack.getPlayer2HandValue() > 21) {
-                blackjackAi.senseActLearn(state, 3);
+                blackjackAi.senseActLearn(state, 10);
                 win += 1;
                 wins.setText(String.valueOf(win));
             }
             if (blackjack.getPlayer2HandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
-                blackjackAi.senseActLearn(state, 3);
+                blackjackAi.senseActLearn(state, 10);
                 win += 1;
                 wins.setText(String.valueOf(win));
             }
             if (blackjack.getPlayer2HandValue() == 21) {
-                blackjackAi.senseActLearn(state, -5);
+                blackjackAi.senseActLearn(state, -20);
                 loss += 1;
                 losses.setText(String.valueOf(loss));
             }
             if (blackjack.getPlayer2HandValue() > blackjack.getPlayerHandValue() && blackjack.getPlayer2HandValue() < 21) {
-                blackjackAi.senseActLearn(state, -5);
+                blackjackAi.senseActLearn(state, -20);
                 loss += 1;
                 losses.setText(String.valueOf(loss));
             }
