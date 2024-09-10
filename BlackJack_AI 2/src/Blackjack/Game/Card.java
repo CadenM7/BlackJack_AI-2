@@ -8,6 +8,8 @@ public class Card {
         this.values = values;
         this.suit = suit;
     }
+
+
     public String getSuit() {
         return suit.name();
     }

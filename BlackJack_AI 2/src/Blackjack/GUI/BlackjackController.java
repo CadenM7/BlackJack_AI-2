@@ -203,11 +203,6 @@ public class BlackjackController {
             }
             updateView();
             reset();
-
-
-            // * After game ends, call senseActLearn() one more time to present reward
-
-            //   * Make sure to do this in AIPlay as well above.
         }
     }
     @FXML
