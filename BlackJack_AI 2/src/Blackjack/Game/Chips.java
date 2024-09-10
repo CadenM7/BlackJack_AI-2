@@ -31,8 +31,8 @@ public class Chips {
     }
 
     public boolean equals (Object other) {
-        if(other instanceof Card) {
-            Card c = (Card)other;
+        if(other instanceof Chips) {
+            Chips c = (Chips)other;
         }
         return false;
     }
