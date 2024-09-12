@@ -3,9 +3,11 @@ package Blackjack.Game;
 public class Blackjack {
     private Player player;
 
-    private Player player2;
+    private Player dealer;
 
     private BlackjackStack deck;
+
+    private Chip chips;
 
     private int size;
 
@@ -16,13 +18,14 @@ public class Blackjack {
         deck.shuffle();
 
         player = new Player();
-        player2 = new Player();
+        dealer = new Player();
+        chips = new Chip(200, 5, 100);
 
         player.add(deck.pop());
-        player2.add(deck.pop());
+        dealer.add(deck.pop());
 
         player.add(deck.pop());
-        player2.add(deck.pop());
+        dealer.add(deck.pop());
 
     }
 
@@ -30,16 +33,16 @@ public class Blackjack {
         String s = "";
         for (int p1 = 0; p1 < player.getLength(); p1++) {
             s += player.handValue();
-            for (int p2 = 0; p2 < player2.getLength(); p2++) {
-                s += player2.handValue();
+            for (int p2 = 0; p2 < dealer.getLength(); p2++) {
+                s += dealer.handValue();
             }
             s += "\n";
         }
         return s;
     }
     public void dealerHit() {
-        player2.add(deck.pop());
-        player2.handValue();
+        dealer.add(deck.pop());
+        dealer.handValue();
     }
 
     public void dealerStand() {
@@ -51,25 +54,25 @@ public class Blackjack {
     }
 
     public Card getDealerCard(int x) {
-        return player2.get(x);
+        return dealer.get(x);
     }
 
     public int getPlayerHandValue() {
         return player.tv();
     }
 
-    public int getPlayer2HandValue() {
-        return player2.tv();
+    public int getDealerHandValue() {
+        return dealer.tv();
     }
 
-    public int getPlayer2FirstCard(){return player2.fv();}
+    public int getDealerFirstCard(){return dealer.fv();}
 
     public int handSize() {
         return player.getLength();
     }
 
     public int dealersHand() {
-        return player2.getLength();
+        return dealer.getLength();
     }
     public void playerHit() {
         player.add(deck.pop());
@@ -77,6 +80,9 @@ public class Blackjack {
     public void playerStand() {
         player.tv();
     }
+    public int minBet(){return chips.getMinBet();}
+    public int maxBet(){return chips.getMaxBet();}
+    public int totalChips(){return chips.getChipValues();}
 }
 
 

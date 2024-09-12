@@ -36,31 +36,31 @@ public class BlackjackController {
     @FXML
     private Button play;
     @FXML
-    private TextField numOfGames;
+    private TextField numofChips;
     @FXML
-    private Button train;
+    private Button bet;
     @FXML
-    private Label wins;
+    private Label TotalChips;
     @FXML
-    private Label losses;
+    private Label minimum;
     @FXML
-    private Label draws;
+    private Label maximum;
 
 
     private Blackjack blackjack;
 
-    private BlackjackAI blackjackAi;
+    /*private BlackjackAI blackjackAi; */
 
     @FXML
     public void initialize() {
         blackjack = new Blackjack(52);
-        blackjackAi = new BlackjackAI(171, 2, 0, 10, 50, .5);
+        /*blackjackAi = new BlackjackAI(171, 2, 0, 10, 50, .5);*/
         updateView();
         System.out.println("Player " + blackjack.getPlayerHandValue());
-        System.out.println("Dealer " + blackjack.getPlayer2HandValue());
+        System.out.println("Dealer " + blackjack.getDealerHandValue());
     }
 
-    @FXML
+   /* @FXML
     private void aiPlay() {
         reset();
         boolean gameOver = false;
@@ -204,7 +204,13 @@ public class BlackjackController {
             updateView();
             reset();
         }
+    } */
+    @FXML
+    public void bet(){
+
     }
+
+
     @FXML
     public void reset() {
         blackjack = new Blackjack(52);
@@ -214,8 +220,8 @@ public class BlackjackController {
         updateView();
         label.setText("BlackJack");
         System.out.println("Player " + blackjack.getPlayerHandValue());
-        System.out.println("Dealer " + blackjack.getPlayer2HandValue());
-        if(blackjack.getPlayer2HandValue() == 21) {
+        System.out.println("Dealer " + blackjack.getDealerHandValue());
+        if(blackjack.getDealerHandValue() == 21) {
             disableButton(true);
         }
         if(blackjack.getPlayerHandValue() == 21) {
@@ -224,7 +230,7 @@ public class BlackjackController {
         if(blackjack.getPlayerHandValue() > 21) {
             disableButton(true);
         }
-        if(blackjack.getPlayer2HandValue() > 21) {
+        if(blackjack.getDealerHandValue() > 21) {
             disableButton(true);
         }
     }
@@ -256,6 +262,7 @@ public class BlackjackController {
     public void disableButton(boolean disable) {
         hit.setDisable(disable);
         stand.setDisable(disable);
+        bet.setDisable(disable);
     }
 
     @FXML
@@ -280,29 +287,34 @@ public class BlackjackController {
         disableButton(true);
         updateView();
 
-        while (blackjack.getPlayer2HandValue() < 17) {
-            if (blackjack.getPlayer2HandValue() == 17) {
+        while (blackjack.getDealerHandValue() < 17) {
+            if (blackjack.getDealerHandValue() == 17) {
                 blackjack.dealerStand();
             } else {
                 blackjack.dealerHit();
             }
             updateView();
         }
-            System.out.println("Dealer " + blackjack.getPlayer2HandValue());
-            if (blackjack.getPlayer2HandValue() > 21) {
+            System.out.println("Dealer " + blackjack.getDealerHandValue());
+            if (blackjack.getDealerHandValue() > 21) {
                 label.setText("WON, Play Again?");
+                /* Add Double Chips to total chips for winning */
             }
-            if (blackjack.getPlayer2HandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
+            if (blackjack.getDealerHandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
                 label.setText("WON, Play Again?");
+                /* Add Double Chips to total chips for winning */
             }
-            if (blackjack.getPlayer2HandValue() == 21) {
+            if (blackjack.getDealerHandValue() == 21) {
                 label.setText("LOSE, Play Again?");
+                /* Take away Chips bet from total chips for losing */
             }
-            if (blackjack.getPlayer2HandValue() > blackjack.getPlayerHandValue() && blackjack.getPlayer2HandValue() < 21) {
+            if (blackjack.getDealerHandValue() > blackjack.getPlayerHandValue() && blackjack.getDealerHandValue() < 21) {
                 label.setText("LOSE, Play Again?");
+                /* Take away Chips bet from total chips for losing */
             }
-            if (blackjack.getPlayer2HandValue() == blackjack.getPlayerHandValue()) {
+            if (blackjack.getDealerHandValue() == blackjack.getPlayerHandValue()) {
                 label.setText("DRAW, Play Again?");
+                /* Take away Chips bet from total chips for losing */
             }
             updateView();
         }
@@ -312,7 +324,19 @@ public class BlackjackController {
     }
     @FXML
     public void getDealerHandValue() {
-         dealerScore.setText(String.valueOf(blackjack.getPlayer2HandValue()));
+         dealerScore.setText(String.valueOf(blackjack.getDealerHandValue()));
+    }
+    @FXML
+    public void getMinBet() {
+        minimum.setText(String.valueOf(blackjack.minBet()));
+    }
+    @FXML
+    public void getMaxBet() {
+        maximum.setText(String.valueOf(blackjack.maxBet()));
+    }
+    @FXML
+    public void getTotalChips() {
+        TotalChips.setText(String.valueOf(blackjack.totalChips()));
     }
 
 }
