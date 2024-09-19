@@ -15,11 +15,11 @@ public class Blackjack {
     public Blackjack(int size) {
         this.size = size;
         deck = new BlackjackStack();
+        chips = new Chip(2000, 10, 100);
         deck.shuffle();
 
         player = new Player();
         dealer = new Player();
-        chips = new Chip(200, 5, 100);
 
         player.add(deck.pop());
         dealer.add(deck.pop());
@@ -45,9 +45,7 @@ public class Blackjack {
         dealer.handValue();
     }
 
-    public void dealerStand() {
-
-    }
+    public void dealerStand() {dealer.tv();}
 
     public Card getCard(int x) {
         return player.get(x);
@@ -74,14 +72,19 @@ public class Blackjack {
     public int dealersHand() {
         return dealer.getLength();
     }
+
     public void playerHit() {
         player.add(deck.pop());
     }
+
     public void playerStand() {
         player.tv();
     }
+
     public int minBet(){return chips.getMinBet();}
+
     public int maxBet(){return chips.getMaxBet();}
+
     public int totalChips(){return chips.getChipValues();}
 }
 

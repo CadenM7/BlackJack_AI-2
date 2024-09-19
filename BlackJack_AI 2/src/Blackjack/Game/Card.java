@@ -26,6 +26,10 @@ public class Card {
         return values.getTV();
     }
 
+    public int getCardSV() {
+        return values.getSV();
+    }
+
     public void setCardValue(CardValues cardValue)
     {
         this.values = cardValue;

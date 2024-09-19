@@ -6,4 +6,5 @@ module Final.Project.Caden.McCarty {
     exports Blackjack.Game;
     exports Blackjack.GUI;
     opens Blackjack.GUI;
+    exports Blackjack.AI;
 }

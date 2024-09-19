@@ -1,4 +1,4 @@
-package Blackjack.Game;
+package Blackjack.AI;
 
 public class BlackjackAI {
 

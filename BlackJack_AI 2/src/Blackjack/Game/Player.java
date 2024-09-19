@@ -25,6 +25,16 @@ public class Player {
         int v = 0;
         for(int i = 0; i < hand.size(); i++) {
             v += hand.get(i).getCardTV();
+
+        }
+        return v;
+    }
+
+    public int sv() {
+        int v = 0;
+        for(int i = 0; i < hand.size(); i++) {
+            v += hand.get(i).getCardSV();
+
         }
         return v;
     }
