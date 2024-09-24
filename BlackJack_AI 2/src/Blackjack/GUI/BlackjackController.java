@@ -277,7 +277,6 @@ public class BlackjackController {
         stand.setDisable(disable);
         bet.setDisable(disable);
         numOfGames.setDisable(disable);
-        numOfChips.setDisable(disable);
     }
 
     @FXML

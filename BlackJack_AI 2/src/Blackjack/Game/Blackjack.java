@@ -25,7 +25,6 @@ public class Blackjack {
         dealer.add(deck.pop());
 
         player.add(deck.pop());
-        dealer.add(deck.pop());
 
     }
 
@@ -63,7 +62,9 @@ public class Blackjack {
         return dealer.tv();
     }
 
-    public int getDealerFirstCard(){return dealer.fv();}
+    public int getDealerFirstCard(){
+        return dealer.fv();
+    }
 
     public int handSize() {
         return player.getLength();

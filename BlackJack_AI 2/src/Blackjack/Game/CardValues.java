@@ -14,7 +14,8 @@ public enum CardValues {
     JACK(11, 10, 10),
     QUEEN(12, 10, 10),
     KING(13, 10, 10),
-    ACE(14, 11, 1);
+    ACE(14, 11, 1),
+    BACK(15,0, 0 );
 
     private int value;
 
