@@ -24,7 +24,7 @@
    <left>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="label" alignment="CENTER" text="BlackJack" textAlignment="CENTER">
+            <Label fx:id="label" alignment="CENTER" text="Place Bet" textAlignment="CENTER">
                <font>
                   <Font size="28.0" />
                </font>

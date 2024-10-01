@@ -211,32 +211,26 @@ public class BlackjackController {
         }
     }
     @FXML
-    public void bet(int win) {
+    public void bet(int out) {
         int bettingChips = Integer.parseInt(numOfChips.getText());
-        if (bettingChips < chips.getMinBet()) {
-            label.setText("Please Bet Higher");
-        }
-        updateView();
-        if (bettingChips > chips.getMaxBet()) {
-            label.setText("Please Bet Lower");
-        }
-        updateView();
+        int totalChips = c - bettingChips;
         if(bettingChips > chips.getMinBet() && bettingChips < chips.getMaxBet()) {
-            if (win == 0) {
-                c += bettingChips * 2;
-                System.out.println(c);
-                TotalChips.setText(String.valueOf(c));
+            if (out == 0) {
+                totalChips += bettingChips * 2;
+                System.out.println(totalChips);
+                TotalChips.setText(String.valueOf(totalChips));
             }
-            if (win == 1) {
-                c += c - bettingChips;
-                System.out.println(c);
-                TotalChips.setText(String.valueOf(c));
+            if (out == 1) {
+                totalChips += c - bettingChips;
+                System.out.println(totalChips);
+                TotalChips.setText(String.valueOf(totalChips));
             }
-            if (win == 2) {
-                System.out.println(c);
-                TotalChips.setText(String.valueOf(c));
+            if (out == 2) {
+                System.out.println(totalChips);
+                TotalChips.setText(String.valueOf(totalChips));
 
             }
+            c = totalChips;
             updateView();
         }
     }
@@ -249,7 +243,7 @@ public class BlackjackController {
         dealersHand.getChildren().clear();
         disableButton(false);
         updateView();
-        label.setText("BlackJack");
+        label.setText("Place a Bet");
         System.out.println("Player " + blackjack.getPlayerHandValue());
         System.out.println("Dealer " + blackjack.getDealerHandValue());
         if(blackjack.getDealerHandValue() == 21) {
@@ -296,13 +290,16 @@ public class BlackjackController {
     public void disableButton(boolean disable) {
         hit.setDisable(disable);
         stand.setDisable(disable);
-        bet.setDisable(disable);
         numOfGames.setDisable(disable);
+    }
+    public void disableBetting(boolean disable) {
+        bet.setDisable(disable);
     }
 
     @FXML
     public void hit() {
         blackjack.playerHit();
+        disableBetting(true);
         updateView();
         getPlayerHandValue();
         System.out.println("Player " + blackjack.getPlayerHandValue());
@@ -322,6 +319,7 @@ public class BlackjackController {
     public void stand() {
         blackjack.playerStand();
         disableButton(true);
+        disableBetting(true);
         updateView();
 
         while (blackjack.getDealerHandValue() < 17) {
