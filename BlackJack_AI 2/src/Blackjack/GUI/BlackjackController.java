@@ -49,14 +49,16 @@ public class BlackjackController {
 
     private Blackjack blackjack;
 
-    private Chip chip;
+    private Chip chips;
 
     private BlackjackAI blackjackAi;
+
+    private int c = 2000;
 
     @FXML
     public void initialize() {
         blackjack = new Blackjack(52);
-        chip = new Chip(200, 5, 100);
+        chips = new Chip(c, 5, 100);
         blackjackAi = new BlackjackAI(171, 2, 0, 10, 50, .5);
         updateView();
         System.out.println("Player " + blackjack.getPlayerHandValue());
@@ -209,14 +211,33 @@ public class BlackjackController {
         }
     }
     @FXML
-    public void bet(boolean win){
-        int chips = Integer.parseInt(numOfChips.getText());
-        int totalChips = blackjack.totalChips();
-        if (win) {
-            totalChips = totalChips * 2;
+    public void bet(int win) {
+        int bettingChips = Integer.parseInt(numOfChips.getText());
+        if (bettingChips < chips.getMinBet()) {
+            label.setText("Please Bet Higher");
         }
-        else {
-            totalChips = totalChips - chips;
+        updateView();
+        if (bettingChips > chips.getMaxBet()) {
+            label.setText("Please Bet Lower");
+        }
+        updateView();
+        if(bettingChips > chips.getMinBet() && bettingChips < chips.getMaxBet()) {
+            if (win == 0) {
+                c += bettingChips * 2;
+                System.out.println(c);
+                TotalChips.setText(String.valueOf(c));
+            }
+            if (win == 1) {
+                c += c - bettingChips;
+                System.out.println(c);
+                TotalChips.setText(String.valueOf(c));
+            }
+            if (win == 2) {
+                System.out.println(c);
+                TotalChips.setText(String.valueOf(c));
+
+            }
+            updateView();
         }
     }
 
@@ -288,10 +309,12 @@ public class BlackjackController {
         if(blackjack.getPlayerHandValue() > 21) {
             disableButton(true);
             label.setText("LOSE, Play Again?");
+            bet(1);
         }
         if(blackjack.getPlayerHandValue() == 21) {
             disableButton(true);
             label.setText("WON, Play Again?");
+            bet(0);
         }
     }
 
@@ -312,26 +335,32 @@ public class BlackjackController {
             System.out.println("Dealer " + blackjack.getDealerHandValue());
             if (blackjack.getDealerHandValue() > 21) {
                 label.setText("WON, Play Again?");
+                bet(0);
                 /* Add Double Chips to total chips for winning */
             }
             if (blackjack.getDealerHandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
                 label.setText("WON, Play Again?");
+                bet(0);
                 /* Add Double Chips to total chips for winning */
             }
             if (blackjack.getDealerHandValue() == 21) {
                 label.setText("LOSE, Play Again?");
+                bet(1);
                 /* Take away Chips bet from total chips for losing */
             }
             if (blackjack.getDealerHandValue() > blackjack.getPlayerHandValue() && blackjack.getDealerHandValue() < 21) {
                 label.setText("LOSE, Play Again?");
+                bet(1);
                 /* Take away Chips bet from total chips for losing */
             }
             if (blackjack.getDealerHandValue() == blackjack.getPlayerHandValue()) {
                 label.setText("DRAW, Play Again?");
-                /* Take away Chips bet from total chips for losing */
+                bet(2);
+                /* Give Chips back to player */
             }
             updateView();
         }
+
     @FXML
     public void getPlayerHandValue() {
         playerScore.setText(String.valueOf(blackjack.getPlayerHandValue()));
@@ -340,23 +369,23 @@ public class BlackjackController {
     public void getDealerHandValue() {
          dealerScore.setText(String.valueOf(blackjack.getDealerHandValue()));
     }
-
     @FXML
     public void getDealerFirstCard() {
         dealerScore.setText(String.valueOf(blackjack.getDealerHandValue()));
     }
     @FXML
     public void getMinBet() {
-        minimum.setText(String.valueOf(blackjack.minBet()));
+        minimum.setText(String.valueOf(chips.getMinBet()));
     }
     @FXML
     public void getMaxBet() {
-        maximum.setText(String.valueOf(blackjack.maxBet()));
+        maximum.setText(String.valueOf(chips.getMaxBet()));
     }
     @FXML
     public void getTotalChips() {
-        TotalChips.setText(String.valueOf(blackjack.totalChips()));
+        TotalChips.setText(String.valueOf(c));
     }
+
 
 }
 

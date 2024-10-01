@@ -15,7 +15,6 @@ public class Blackjack {
     public Blackjack(int size) {
         this.size = size;
         deck = new BlackjackStack();
-        chips = new Chip(2000, 10, 100);
         deck.shuffle();
 
         player = new Player();
@@ -82,11 +81,6 @@ public class Blackjack {
         player.tv();
     }
 
-    public int minBet(){return chips.getMinBet();}
-
-    public int maxBet(){return chips.getMaxBet();}
-
-    public int totalChips(){return chips.getChipValues();}
 }
 
 
