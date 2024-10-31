@@ -46,6 +46,10 @@ public class BlackjackController {
     private Label losses;
     @FXML
     private Label draws;
+    @FXML
+    private Button train;
+    @FXML
+    private Button play;
 
     private Blackjack blackjack;
 
@@ -131,6 +135,7 @@ public class BlackjackController {
         int win = 0;
         int loss = 0;
         int draw = 0;
+        disableAI(true);
         int games = Integer.parseInt(numOfGames.getText());
         // For each game
         for(int i = 0; i < games; i++){
@@ -214,14 +219,14 @@ public class BlackjackController {
     public void bet(int out) {
         int bettingChips = Integer.parseInt(numOfChips.getText());
         int totalChips = c - bettingChips;
-        if(bettingChips > chips.getMinBet() && bettingChips < chips.getMaxBet()) {
+        if(bettingChips > chips.getMinBet() - 1 && bettingChips < chips.getMaxBet() + 1) {
             if (out == 0) {
                 totalChips += bettingChips * 2;
                 System.out.println(totalChips);
                 TotalChips.setText(String.valueOf(totalChips));
             }
             if (out == 1) {
-                totalChips += c - bettingChips;
+                totalChips = c - bettingChips;
                 System.out.println(totalChips);
                 TotalChips.setText(String.valueOf(totalChips));
             }
@@ -239,11 +244,14 @@ public class BlackjackController {
     @FXML
     public void reset() {
         blackjack = new Blackjack(52);
-        playerCards.getChildren().clear();
         dealersHand.getChildren().clear();
+        System.out.println("Getting dealers Card" + blackjack.getDealerFirstCard());
+        playerCards.getChildren().clear();
         disableButton(false);
+        disableBetting(false);
+        disableAI(false);
         updateView();
-        label.setText("Place a Bet");
+        label.setText("Place Bet");
         System.out.println("Player " + blackjack.getPlayerHandValue());
         System.out.println("Dealer " + blackjack.getDealerHandValue());
         if(blackjack.getDealerHandValue() == 21) {
@@ -274,8 +282,8 @@ public class BlackjackController {
             setCardImage(blackjack.getDealerCard(x).ab(), iv2);
 
         }
-        getDealerFirstCard();
         getPlayerHandValue();
+        getDealerFirstCard();
         getTotalChips();
         getMinBet();
         getMaxBet();
@@ -290,16 +298,23 @@ public class BlackjackController {
     public void disableButton(boolean disable) {
         hit.setDisable(disable);
         stand.setDisable(disable);
-        numOfGames.setDisable(disable);
+        play.setDisable(disable);
     }
     public void disableBetting(boolean disable) {
         bet.setDisable(disable);
+        numOfChips.setDisable(disable);
+    }
+    public void disableAI(boolean disable) {
+        numOfGames.setDisable(disable);
+        train.setDisable(disable);
+
     }
 
     @FXML
     public void hit() {
         blackjack.playerHit();
         disableBetting(true);
+        disableAI(true);
         updateView();
         getPlayerHandValue();
         System.out.println("Player " + blackjack.getPlayerHandValue());
@@ -320,6 +335,7 @@ public class BlackjackController {
         blackjack.playerStand();
         disableButton(true);
         disableBetting(true);
+        disableAI(true);
         updateView();
 
         while (blackjack.getDealerHandValue() < 17) {

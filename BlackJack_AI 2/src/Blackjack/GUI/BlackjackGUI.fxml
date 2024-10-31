@@ -93,7 +93,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="numOfGames" alignment="CENTER" prefHeight="25.0" prefWidth="69.0" promptText="# of games" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aiTrain" text="Train" textAlignment="CENTER">
+                  <Button fx:id="train" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#aiTrain" text="Train" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -109,7 +109,7 @@
                   <Insets bottom="15.0" top="75.0" />
                </padding>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#aiPlay" text="AI Play" />
+            <Button fx:id="play" mnemonicParsing="false" onAction="#aiPlay" text="AI Play" />
             <VBox alignment="CENTER" prefHeight="151.0" prefWidth="77.0">
                <children>
                   <Label text="Total Chips" />

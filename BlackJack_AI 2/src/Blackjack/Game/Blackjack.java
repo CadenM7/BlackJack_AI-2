@@ -7,8 +7,6 @@ public class Blackjack {
 
     private BlackjackStack deck;
 
-    private Chip chips;
-
     private int size;
 
 
@@ -20,8 +18,8 @@ public class Blackjack {
         player = new Player();
         dealer = new Player();
 
-        player.add(deck.pop());
         dealer.add(deck.pop());
+        player.add(deck.pop());
 
         player.add(deck.pop());
 
