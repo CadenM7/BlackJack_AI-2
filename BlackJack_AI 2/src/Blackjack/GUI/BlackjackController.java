@@ -63,7 +63,7 @@ public class BlackjackController {
     public void initialize() {
         blackjack = new Blackjack(52);
         chips = new Chip(c, 5, 100);
-        blackjackAi = new BlackjackAI(171, 2, 0, 10, 50, .5);
+        blackjackAi = new BlackjackAI(172, 2, 0, 10, 50, .5);
         updateView();
         System.out.println("Player " + blackjack.getPlayerHandValue());
         System.out.println("Dealer " + blackjack.getDealerHandValue());
@@ -191,22 +191,32 @@ public class BlackjackController {
                 win += 1;
                 wins.setText(String.valueOf(win));
             }
-            if (blackjack.getDealerHandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
+            else if (blackjack.getPlayerHandValue() == 21) {
+                blackjackAi.senseActLearn(state,20);
+                win +=1;
+                wins.setText(String.valueOf(win));
+            }
+            else if (blackjack.getPlayerHandValue() > 21) {
+                blackjackAi.senseActLearn(state, -50);
+                loss += 1;
+                losses.setText(String.valueOf(loss));
+            }
+            else if (blackjack.getDealerHandValue() < blackjack.getPlayerHandValue() && blackjack.getPlayerHandValue() < 21) {
                 blackjackAi.senseActLearn(state, 20);
                 win += 1;
                 wins.setText(String.valueOf(win));
             }
-            if (blackjack.getDealerHandValue() == 21) {
+            else if (blackjack.getDealerHandValue() == 21) {
                 blackjackAi.senseActLearn(state, -50);
                 loss += 1;
                 losses.setText(String.valueOf(loss));
             }
-            if (blackjack.getDealerHandValue() > blackjack.getPlayerHandValue() && blackjack.getDealerHandValue() < 21) {
+            else if (blackjack.getDealerHandValue() > blackjack.getPlayerHandValue() && blackjack.getDealerHandValue() < 21) {
                 blackjackAi.senseActLearn(state, -50);
                 loss += 1;
                 losses.setText(String.valueOf(loss));
             }
-            if (blackjack.getDealerHandValue() == blackjack.getPlayerHandValue()) {
+            else {
                 blackjackAi.senseActLearn(state, 0);
                 draw += 1;
                 draws.setText(String.valueOf(draw));
