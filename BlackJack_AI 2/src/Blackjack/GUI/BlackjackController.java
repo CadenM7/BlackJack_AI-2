@@ -216,6 +216,11 @@ public class BlackjackController {
                 loss += 1;
                 losses.setText(String.valueOf(loss));
             }
+            else if (blackjack.getDealerHandValue() > 21 && blackjack.getPlayerHandValue() > 21) {
+                blackjackAi.senseActLearn(state, 0);
+                draw += 1;
+                draws.setText(String.valueOf(draw));
+            }
             else {
                 blackjackAi.senseActLearn(state, 0);
                 draw += 1;
